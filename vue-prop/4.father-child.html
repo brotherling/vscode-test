@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <com v-bind:parent-msg='msg'></com>
+    </div>
+</body>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                msg: '父组件的数据'
+            },
+            methods: {
+
+            },
+            components: {
+                com: {
+                    template: '<h3 @click="change">这是父组件传过来的--------{{parentMsg}}--{{title}}</h3>',
+                    data(){
+                        return {
+                            title: '123'
+                        }
+                    },
+                    props: ['parentMsg'], //父组件中传递过来的parent-msg属性, 必须在prop中第一一下,子组件才能使用
+                    methods:{
+                        change(){
+                            this.parentMsg = "被修改了"
+                        }
+                    }
+                    // 总结: 子组件默认是无法访问到父组件的data和方法的
+                    //    组件中 props 中所有的数据都是 父组件传递过来的
+                    //    props中的数据只能读 ,不能写
+                }
+            }
+        })
+    </script>
+</html>
